@@ -10,6 +10,9 @@
  *   - add each card's HTML to the page
  */
 
+const CARDS = document.querySelector('.deck');
+let cardArray = document.getElementsByClassName('card')
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -24,6 +27,24 @@ function shuffle(array) {
 
     return array;
 }
+
+
+(function(){
+/*
+*ADDS Evenet Listener on CARD element to detect which cards are being pressed
+*/
+CARDS.addEventListener('click', function(e) {
+
+	if(e.target.tagName ==='LI') {
+
+        e.target.classList.toggle('open');
+        e.target.classList.toggle('show');
+
+	}
+});
+
+})();
+
 
 
 /*
