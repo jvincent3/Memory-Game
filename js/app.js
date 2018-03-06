@@ -10,8 +10,9 @@
  *   - add each card's HTML to the page
  */
 
-const CARDS = document.querySelector('.deck');
-let cardArray = document.getElementsByClassName('card')
+const DECK = document.getElementById('deck');
+let CARDS = DECK.children;
+let arr = Array.prototype.slice.call(CARDS, 0 );
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -25,21 +26,28 @@ function shuffle(array) {
         array[randomIndex] = temporaryValue;
     }
 
-    return array;
+    //return array;
+    shuffleCards(array);
+    //DECK.children = array
+    //console.log(array);
 }
 
+function flipCard(e) {
+
+    e.target.classList.toggle('open');
+    e.target.classList.toggle('show');
+}
 
 (function(){
+//shuffleCards();
 /*
 *ADDS Evenet Listener on CARD element to detect which cards are being pressed
 */
-CARDS.addEventListener('click', function(e) {
 
+DECK.addEventListener('click', function(e) {
+//function(e) the e inside the function is event to detect what event
 	if(e.target.tagName ==='LI') {
-
-        e.target.classList.toggle('open');
-        e.target.classList.toggle('show');
-
+        flipCard(e);
 	}
 });
 
