@@ -44,7 +44,7 @@ function shuffleCards(array) {
     }
 }
 
-function faceCardsDown() {
+function faceAllCardsDown() {
 
     for (let i = 0; i < DECK.children.length; ++i) {
 
@@ -53,6 +53,11 @@ function faceCardsDown() {
         DECK.children[i].classList.remove('match');
 
     }
+}
+
+function restart(arr) {
+    faceAllCardsDown();
+    shuffle(arr);
 }
 
 (function(){
