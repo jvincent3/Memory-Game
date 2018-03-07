@@ -72,6 +72,13 @@ DECK.addEventListener('click', function(e) {
         flipCard(e);
 	}
 });
+//THIS ADDEVENTLISTENER LISTENS TO CLICKS MADE IN THE BODY
+document.body.addEventListener('click', function(e) {
+    //CHECKS IF THE TARGET CLICKED HAS A PARENT WITH A CLASS RESTART
+    if (e.target.parentElement.className === 'restart') {
+        restart(arr);
+    }
+})
 
 })();
 
