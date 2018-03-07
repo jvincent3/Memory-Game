@@ -26,16 +26,24 @@ function shuffle(array) {
         array[randomIndex] = temporaryValue;
     }
 
-    //return array;
+
     shuffleCards(array);
-    //DECK.children = array
-    //console.log(array);
+
 }
 
 function flipCard(e) {
 
     e.target.classList.toggle('open');
     e.target.classList.toggle('show');
+}
+
+function shuffleCards(array) {
+    for (let i = 0; i < DECK.childElementCount; i+0) {
+        DECK.removeChild(DECK.firstChild);
+    }
+    for (let i = 0; i < array.length; ++i) {
+        DECK.appendChild(arr[i]);
+    }
 }
 
 (function(){
