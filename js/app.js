@@ -25,24 +25,33 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
-
     shuffleCards(array);
-
 }
 
 function flipCard(e) {
-
     e.target.classList.toggle('open');
     e.target.classList.toggle('show');
 }
 
 function shuffleCards(array) {
+    //THIS FOR LOOP COUNTS ALL THE CHILDREN OF DECK AND REMOVES THEM
     for (let i = 0; i < DECK.childElementCount; i+0) {
         DECK.removeChild(DECK.firstChild);
     }
+    //THIS FOR LOOP ADDS THE SHUFFLED cards
     for (let i = 0; i < array.length; ++i) {
         DECK.appendChild(arr[i]);
+    }
+}
+
+function faceCardsDown() {
+
+    for (let i = 0; i < DECK.children.length; ++i) {
+
+        DECK.children[i].classList.remove('open');
+        DECK.children[i].classList.remove('show');
+        DECK.children[i].classList.remove('match');
+
     }
 }
 
