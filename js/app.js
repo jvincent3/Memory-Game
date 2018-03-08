@@ -11,6 +11,7 @@
  */
 
 const DECK = document.getElementById('deck');
+const OPENEL = document.body.getElementsByClassName('open');
 let CARDS = DECK.children;
 let arr = Array.prototype.slice.call(CARDS, 0 );
 
@@ -27,12 +28,12 @@ function shuffle(array) {
     }
     shuffleCards(array);
 }
-
+// Function that shows the face of the card
 function flipCard(e) {
     e.target.classList.toggle('open');
     e.target.classList.toggle('show');
 }
-
+//
 function shuffleCards(array) {
     //THIS FOR LOOP COUNTS ALL THE CHILDREN OF DECK AND REMOVES THEM
     for (let i = 0; i < DECK.childElementCount; i+0) {
@@ -45,9 +46,7 @@ function shuffleCards(array) {
 }
 
 function faceAllCardsDown() {
-
     for (let i = 0; i < DECK.children.length; ++i) {
-
         DECK.children[i].classList.remove('open');
         DECK.children[i].classList.remove('show');
         DECK.children[i].classList.remove('match');
@@ -55,22 +54,55 @@ function faceAllCardsDown() {
     }
 }
 
+function faceCardDown(el) {
+    el[0].classList.remove('show');
+    el[0].classList.remove('open');
+    el[0].classList.remove('show');
+    el[0].classList.remove('open');
+}
+
 function restart(arr) {
     faceAllCardsDown();
     shuffle(arr);
 }
+function shake(el1, el2) {
+    el1.classList.add('shake');
+    el2.classList.add('shake');
+    setTimeout(function(){
+        el1.classList.remove('shake');
+        el2.classList.remove('shake');
+    }, 2000);
+}
+
+function verifyCard() {
+        if (OPENEL[0].children[0].classList[1] == OPENEL[1].children[0].classList[1]) {
+            OPENEL[0].classList.add('match');
+            OPENEL[1].classList.add('match');
+            OPENEL[0].classList.remove('show');
+            OPENEL[0].classList.remove('open');
+            OPENEL[0].classList.remove('show');
+            OPENEL[0].classList.remove('open');
+        } else {
+            shake( OPENEL[0], OPENEL[1] );
+            setTimeout(faceCardDown(OPENEL), 2000);
+
+        }
+        
+}
 
 (function(){
-//shuffleCards();
 /*
 *ADDS Evenet Listener on CARD element to detect which cards are being pressed
 */
 
 DECK.addEventListener('click', function(e) {
 //function(e) the e inside the function is event to detect what event
+
+    //Checks if clicked element is a li
 	if(e.target.tagName ==='LI') {
         flipCard(e);
 	}
+
 });
 //THIS ADDEVENTLISTENER LISTENS TO CLICKS MADE IN THE BODY
 document.body.addEventListener('click', function(e) {
@@ -78,11 +110,14 @@ document.body.addEventListener('click', function(e) {
     if (e.target.parentElement.className === 'restart') {
         restart(arr);
     }
+    if (OPENEL.length == 2) {
+        setTimeout(verifyCard, 1500);
+    }
 })
 
+
+
 })();
-
-
 
 /*
  * set up the event listener for a card. If a card is clicked:
