@@ -110,7 +110,8 @@ document.body.addEventListener('click', function(e) {
     if (e.target.parentElement.className === 'restart') {
         restart(arr);
     }
-    if (OPENEL.length == 2) {
+    //Checks facing up cards, if greater than 2 and not matched, facedown
+    if (OPENEL.length >= 2) {
         setTimeout(verifyCard, 1500);
     }
 })
