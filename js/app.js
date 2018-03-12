@@ -61,10 +61,16 @@ function faceCardDown(el) {
     el[0].classList.remove('open');
 }
 
+function countMoves() {
+    let moves = document.getElementsByClassName('moves')[0];
+    moves.textContent = Number(moves.textContent) + 1;
+}
+
 function restart(arr) {
     faceAllCardsDown();
     shuffle(arr);
 }
+
 function shake(el1, el2) {
     el1.classList.add('shake');
     el2.classList.add('shake');
@@ -113,6 +119,7 @@ document.body.addEventListener('click', function(e) {
     //Checks facing up cards, if greater than 2 and not matched, facedown
     if (OPENEL.length >= 2) {
         setTimeout(verifyCard, 1500);
+        setTimeout(countMoves, 1500);
     }
 })
 
