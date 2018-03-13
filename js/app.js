@@ -61,9 +61,28 @@ function faceCardDown(el) {
     el[0].classList.remove('open');
 }
 
+function starRating(moves) {
+    const STARS = document.getElementsByClassName('stars')[0];
+
+    if (moves >= 15) {
+        STARS.children[0].children[0].classList.remove('fa-star');
+        STARS.children[0].children[0].classList.add('fa-star-o');
+    }
+    else if (moves >= 10) {
+        STARS.children[1].children[0].classList.remove('fa-star');
+        STARS.children[1].children[0].classList.add('fa-star-o');
+    }
+    else if (moves >= 5) {
+        STARS.children[2].children[0].classList.remove('fa-star');
+        STARS.children[2].children[0].classList.add('fa-star-o');
+    }
+
+};
+
 function countMoves() {
     let moves = document.getElementsByClassName('moves')[0];
     moves.textContent = Number(moves.textContent) + 1;
+    starRating(moves.textContent);
 }
 
 function restart(arr) {
@@ -91,7 +110,6 @@ function verifyCard() {
         } else {
             shake( OPENEL[0], OPENEL[1] );
             setTimeout(faceCardDown(OPENEL), 2000);
-
         }
         
 }
