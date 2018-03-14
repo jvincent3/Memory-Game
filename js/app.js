@@ -12,9 +12,19 @@
 
 const DECK = document.getElementById('deck');
 const OPENEL = document.body.getElementsByClassName('open');
+const SHAKEL = document.body.getElementsByClassName('shake');
 let CARDS = DECK.children;
 let arr = Array.prototype.slice.call(CARDS, 0 );
 
+
+function click(e) {
+//function(e) the e inside the function is event to detect what event
+
+    //Checks if clicked element is a li
+    if(e.target.tagName ==='LI') {
+        flipCard(e);
+    }
+}
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -33,6 +43,7 @@ function flipCard(e) {
     e.target.classList.toggle('open');
     e.target.classList.toggle('show');
 }
+
 //
 function shuffleCards(array) {
     //THIS FOR LOOP COUNTS ALL THE CHILDREN OF DECK AND REMOVES THEM
@@ -107,9 +118,11 @@ function verifyCard() {
             OPENEL[0].classList.remove('open');
             OPENEL[0].classList.remove('show');
             OPENEL[0].classList.remove('open');
+             DECK.removeEventListener('click', click);
         } else {
             shake( OPENEL[0], OPENEL[1] );
             setTimeout(faceCardDown(OPENEL), 2000);
+             DECK.removeEventListener('click', click);
         }
         
 }
@@ -119,15 +132,7 @@ function verifyCard() {
 *ADDS Evenet Listener on CARD element to detect which cards are being pressed
 */
 
-DECK.addEventListener('click', function(e) {
-//function(e) the e inside the function is event to detect what event
-
-    //Checks if clicked element is a li
-	if(e.target.tagName ==='LI') {
-        flipCard(e);
-	}
-
-});
+DECK.addEventListener('click', click);
 //THIS ADDEVENTLISTENER LISTENS TO CLICKS MADE IN THE BODY
 document.body.addEventListener('click', function(e) {
     //CHECKS IF THE TARGET CLICKED HAS A PARENT WITH A CLASS RESTART
@@ -135,13 +140,19 @@ document.body.addEventListener('click', function(e) {
         restart(arr);
     }
     //Checks facing up cards, if greater than 2 and not matched, facedown
-    if (OPENEL.length >= 2) {
-        setTimeout(verifyCard, 1500);
-        setTimeout(countMoves, 1500);
+    if (OPENEL.length === 2 && e.target.classList[1] === 'open') {
+        setTimeout(verifyCard, 1000);
+        setTimeout(countMoves, 1000);
+
+    } else if (OPENEL.length === 0 && SHAKEL.length === 0) {
+        DECK.addEventListener('click', click);
     }
+
+    if (OPENEL.length >= 2 || SHAKEL.length > 0 ) {
+        DECK.removeEventListener('click', click);
+    }
+    console.log(e.target.classList[1]);
 })
-
-
 
 })();
 
