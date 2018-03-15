@@ -17,7 +17,7 @@ let CARDS = DECK.children;
 let arr = Array.prototype.slice.call(CARDS, 0 );
 
 
-function click(e) {
+const click = (e) => {
 //function(e) the e inside the function is event to detect what event
 
     //Checks if clicked element is a li
@@ -26,7 +26,7 @@ function click(e) {
     }
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
+const shuffle = (array) => {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
@@ -38,14 +38,14 @@ function shuffle(array) {
     }
     shuffleCards(array);
 }
-// Function that shows the face of the card
-function flipCard(e) {
+// function that shows the face of the card
+const flipCard = (e) => {
     e.target.classList.toggle('open');
     e.target.classList.toggle('show');
 }
 
 //
-function shuffleCards(array) {
+const shuffleCards = (array) => {
     //THIS FOR LOOP COUNTS ALL THE CHILDREN OF DECK AND REMOVES THEM
     for (let i = 0; i < DECK.childElementCount; i+0) {
         DECK.removeChild(DECK.firstChild);
@@ -56,7 +56,7 @@ function shuffleCards(array) {
     }
 }
 
-function faceAllCardsDown() {
+const faceAllCardsDown = () => {
     for (let i = 0; i < DECK.children.length; ++i) {
         DECK.children[i].classList.remove('open');
         DECK.children[i].classList.remove('show');
@@ -65,14 +65,14 @@ function faceAllCardsDown() {
     }
 }
 
-function faceCardDown(el) {
+const faceCardDown = (el) => {
     el[0].classList.remove('show');
     el[0].classList.remove('open');
     el[0].classList.remove('show');
     el[0].classList.remove('open');
 }
 
-function starRating(moves) {
+const starRating = (moves) => {
     const STARS = document.getElementsByClassName('stars')[0];
 
     if (moves >= 15) {
@@ -90,18 +90,18 @@ function starRating(moves) {
 
 };
 
-function countMoves() {
+const countMoves = () => {
     let moves = document.getElementsByClassName('moves')[0];
     moves.textContent = Number(moves.textContent) + 1;
     starRating(moves.textContent);
 }
 
-function restart(arr) {
+const restart = (arr) => {
     faceAllCardsDown();
     shuffle(arr);
 }
 
-function shake(el1, el2) {
+const shake = (el1, el2) => {
     el1.classList.add('shake');
     el2.classList.add('shake');
     setTimeout(function(){
@@ -110,7 +110,7 @@ function shake(el1, el2) {
     }, 2000);
 }
 
-function verifyCard() {
+const verifyCard = () => {
         if (OPENEL[0].children[0].classList[1] == OPENEL[1].children[0].classList[1]) {
             OPENEL[0].classList.add('match');
             OPENEL[1].classList.add('match');
@@ -133,7 +133,7 @@ function verifyCard() {
 */
 
 //THIS ADDEVENTLISTENER LISTENS TO CLICKS MADE IN THE BODY
-document.body.addEventListener('click', function(e) {
+document.body.addEventListener('click', function(e) { // Should change transform this into function
     //CHECKS IF THE TARGET CLICKED HAS A PARENT WITH A CLASS RESTART
     if (e.target.parentElement.className === 'restart') {
         restart(arr);
