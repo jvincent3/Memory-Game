@@ -21,7 +21,7 @@ const click = (e) => {
 //function(e) the e inside the function is event to detect what event
 
     //Checks if clicked element is a li
-    if(e.target.tagName ==='LI') {
+    if(e.target.tagName ==='LI' && !e.target.classList.contains('match')) {
         flipCard(e);
     }
 }
