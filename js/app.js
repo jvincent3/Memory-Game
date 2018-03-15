@@ -132,7 +132,6 @@ function verifyCard() {
 *ADDS Evenet Listener on CARD element to detect which cards are being pressed
 */
 
-DECK.addEventListener('click', click);
 //THIS ADDEVENTLISTENER LISTENS TO CLICKS MADE IN THE BODY
 document.body.addEventListener('click', function(e) {
     //CHECKS IF THE TARGET CLICKED HAS A PARENT WITH A CLASS RESTART
@@ -140,18 +139,17 @@ document.body.addEventListener('click', function(e) {
         restart(arr);
     }
     //Checks facing up cards, if greater than 2 and not matched, facedown
-    if (OPENEL.length === 2 && e.target.classList[1] === 'open') {
+    if (OPENEL.length === 0 && SHAKEL.length === 0) {
+        DECK.addEventListener('click', click);
+    } else if (OPENEL.length === 2 && e.target.classList[1] === 'open') {
         setTimeout(verifyCard, 1000);
         setTimeout(countMoves, 1000);
 
-    } else if (OPENEL.length === 0 && SHAKEL.length === 0) {
-        DECK.addEventListener('click', click);
     }
 
     if (OPENEL.length >= 2 || SHAKEL.length > 0 ) {
         DECK.removeEventListener('click', click);
     }
-    console.log(e.target.classList[1]);
 })
 
 })();
