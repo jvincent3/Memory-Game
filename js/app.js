@@ -15,6 +15,9 @@ const OPENEL = document.body.getElementsByClassName('open');
 const SHAKEL = document.body.getElementsByClassName('shake');
 let CARDS = DECK.children;
 let arr = Array.prototype.slice.call(CARDS, 0 );
+let minutes = document.getElementById('minutes');
+let seconds = document.getElementById('seconds');
+let totalSeconds = 0;
 
 
 const click = (e) => {
@@ -72,6 +75,28 @@ const faceCardDown = (el) => {
     el[0].classList.remove('open');
 }
 
+const timer = () => {
+
+    setInterval(() => setTime(seconds, minutes), 1000);
+}
+
+const setTime = (seconds, minutes) => {
+  ++totalSeconds;
+  seconds.innerHTML = pad(totalSeconds % 60);
+  minutes.innerHTML = pad(parseInt(totalSeconds / 60));
+  console.log(seconds.innerHTML);
+  console.log(totalSeconds);
+}
+
+const pad = (val) => {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+
 const starRating = (moves) => {
     const STARS = document.getElementsByClassName('stars')[0];
 
@@ -99,6 +124,10 @@ const countMoves = () => {
 const restart = (arr) => {
     faceAllCardsDown();
     shuffle(arr);
+    timer();
+    let minutes = 0;
+    let seconds = 0;
+    let totalSeconds = 0;
 }
 
 const shake = (el1, el2) => {
@@ -107,7 +136,7 @@ const shake = (el1, el2) => {
     setTimeout(function(){
         el1.classList.remove('shake');
         el2.classList.remove('shake');
-    }, 2000);
+    }, 500);
 }
 
 const verifyCard = () => {
@@ -131,7 +160,7 @@ const verifyCard = () => {
 /*
 *ADDS Evenet Listener on CARD element to detect which cards are being pressed
 */
-
+timer();
 //THIS ADDEVENTLISTENER LISTENS TO CLICKS MADE IN THE BODY
 document.body.addEventListener('click', function(e) { // Should change transform this into function
     //CHECKS IF THE TARGET CLICKED HAS A PARENT WITH A CLASS RESTART
@@ -140,14 +169,24 @@ document.body.addEventListener('click', function(e) { // Should change transform
     }
     //Checks facing up cards, if greater than 2 and not matched, facedown
     if (OPENEL.length === 0 && SHAKEL.length === 0) {
+        console.log('if')
         DECK.addEventListener('click', click);
+
+
+    if(e.target.tagName ==='LI' && !e.target.classList.contains('match')) {
+        flipCard(e);
+    }
+
+
     } else if (OPENEL.length === 2 && e.target.classList[1] === 'open') {
+        console.log('elseif')
         setTimeout(verifyCard, 1000);
         setTimeout(countMoves, 1000);
 
     }
 
     if (OPENEL.length >= 2 || SHAKEL.length > 0 ) {
+        console.log('remove event')
         DECK.removeEventListener('click', click);
     }
 })
