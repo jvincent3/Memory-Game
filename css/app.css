@@ -78,6 +78,7 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+
 }
 
 /*
@@ -88,9 +89,26 @@ h1 {
     transform: rotateY(180deg);
 }
 
+.match {
+    animation: bounce 0.5s;
+    animation-iteration-count: 2;
+}
+
 .shake {
     animation: shake 0.5s;
-    animation-iteration-count: ;
+    animation-iteration-count: 2;
+}
+
+@keyframes bounce {
+    50% {
+        transform: scale(.5)
+    },
+    70% {
+        transform: scale(1.5);
+    },
+    100% {
+        transform: scale(1);
+    }
 }
 
 @keyframes shake {
@@ -126,4 +144,9 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+.score-panel .timer {
+    display: inline-block;
+    padding-left: 40px;
 }
