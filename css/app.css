@@ -150,3 +150,16 @@ h1 {
     display: inline-block;
     padding-left: 40px;
 }
+/*
+* Styles for Modal
+*/
+
+#modal {
+    text-align: center;
+    margin-top: 35%;
+    display: none;
+}
+#modal > button {
+    display: block;
+    margin: auto;
+}
