@@ -13,10 +13,13 @@
 const DECK = document.getElementById('deck');
 const OPENEL = document.body.getElementsByClassName('open');
 const SHAKEL = document.body.getElementsByClassName('shake');
+const MATCHEL = document.body.getElementsByClassName('match');
+const STARS = document.getElementsByClassName('stars')[0];
+const seconds = document.getElementById('seconds');
+const minutes = document.getElementById('minutes');
+let intervalTrigger = null;
 let CARDS = DECK.children;
 let arr = Array.prototype.slice.call(CARDS, 0 );
-let minutes = document.getElementById('minutes');
-let seconds = document.getElementById('seconds');
 let totalSeconds = 0;
 
 
@@ -77,15 +80,20 @@ const faceCardDown = (el) => {
 
 const timer = () => {
 
-    setInterval(() => setTime(seconds, minutes), 1000);
+    intervalTrigger = setInterval(() => setTime(seconds, minutes), 1000);
+ 
 }
 
-const setTime = (seconds, minutes) => {
+const setTime = (sec, min) => {
   ++totalSeconds;
-  seconds.innerHTML = pad(totalSeconds % 60);
-  minutes.innerHTML = pad(parseInt(totalSeconds / 60));
-  console.log(seconds.innerHTML);
-  console.log(totalSeconds);
+  sec.innerHTML = pad(totalSeconds % 60);
+  min.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+const modalTime = () => {
+   const modalTime = document.getElementById('time');
+
+   modalTime.textContent = minutes.textContent +":"+ seconds.textContent;
 }
 
 const pad = (val) => {
@@ -98,36 +106,70 @@ const pad = (val) => {
 }
 
 const starRating = (moves) => {
-    const STARS = document.getElementsByClassName('stars')[0];
 
-    if (moves >= 15) {
-        STARS.children[0].children[0].classList.remove('fa-star');
-        STARS.children[0].children[0].classList.add('fa-star-o');
+    if (moves >= 35) {
+        
+            STARS.children[0].children[0].classList.remove('fa-star');
+            STARS.children[0].children[0].classList.add('fa-star-o');
+        
+
     }
-    else if (moves >= 10) {
-        STARS.children[1].children[0].classList.remove('fa-star');
-        STARS.children[1].children[0].classList.add('fa-star-o');
+    else if (moves >= 25) {
+        
+            STARS.children[1].children[0].classList.remove('fa-star');
+            STARS.children[1].children[0].classList.add('fa-star-o');
+        
     }
-    else if (moves >= 5) {
-        STARS.children[2].children[0].classList.remove('fa-star');
-        STARS.children[2].children[0].classList.add('fa-star-o');
+    else if (moves >= 15) {
+        
+            STARS.children[2].children[0].classList.remove('fa-star');
+            STARS.children[2].children[0].classList.add('fa-star-o');
+        
     }
 
 };
 
+const starReset = () => {
+    
+        for (let i = 0; i < 3; i++) {
+            STARS.children[i].children[0].classList.remove('fa-star-o');
+            STARS.children[i].children[0].classList.add('fa-star');
+        }
+
+    
+}
+
 const countMoves = () => {
     let moves = document.getElementsByClassName('moves')[0];
     moves.textContent = Number(moves.textContent) + 1;
+    document.getElementsByClassName('moves')[1].textContent = moves.textContent;
     starRating(moves.textContent);
+    gameComplete();
 }
 
 const restart = (arr) => {
+    let moves = document.getElementsByClassName('moves')[0];
+    moves.textContent = 0;
     faceAllCardsDown();
     shuffle(arr);
     timer();
-    let minutes = 0;
-    let seconds = 0;
-    let totalSeconds = 0;
+    starReset();
+    document.getElementById('game').style.display = "flex";
+    document.getElementById('modal').style.display = "none";
+    totalSeconds = -1;
+    if (intervalTrigger) {
+        clearInterval(intervalTrigger);
+    }
+}
+
+const gameComplete = () => {
+    let stars = document.getElementsByClassName('stars')[0];
+    let stars2 = document.getElementsByClassName('stars')[1];
+    if (MATCHEL.length == DECK.children.length) {
+        document.getElementById('game').style.display = "none";
+        document.getElementById('modal').style.display = "block";
+        stars2.innerHTML = stars.innerHTML;
+    }
 }
 
 const shake = (el1, el2) => {
@@ -164,12 +206,11 @@ timer();
 //THIS ADDEVENTLISTENER LISTENS TO CLICKS MADE IN THE BODY
 document.body.addEventListener('click', function(e) { // Should change transform this into function
     //CHECKS IF THE TARGET CLICKED HAS A PARENT WITH A CLASS RESTART
-    if (e.target.parentElement.className === 'restart') {
+    if (e.target.parentElement.className === 'restart' || e.target.className === 'restart') {
         restart(arr);
     }
     //Checks facing up cards, if greater than 2 and not matched, facedown
     if (OPENEL.length === 0 && SHAKEL.length === 0) {
-        console.log('if')
         DECK.addEventListener('click', click);
 
 
@@ -179,19 +220,20 @@ document.body.addEventListener('click', function(e) { // Should change transform
 
 
     } else if (OPENEL.length === 2 && e.target.classList[1] === 'open') {
-        console.log('elseif')
         setTimeout(verifyCard, 1000);
         setTimeout(countMoves, 1000);
 
     }
 
     if (OPENEL.length >= 2 || SHAKEL.length > 0 ) {
-        console.log('remove event')
         DECK.removeEventListener('click', click);
     }
+
 })
 
+
 })();
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
