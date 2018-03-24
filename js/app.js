@@ -15,6 +15,8 @@ const OPENEL = document.body.getElementsByClassName('open');
 const SHAKEL = document.body.getElementsByClassName('shake');
 const MATCHEL = document.body.getElementsByClassName('match');
 const STARS = document.getElementsByClassName('stars')[0];
+const seconds = document.getElementById('seconds');
+const minutes = document.getElementById('minutes');
 let intervalTrigger = null;
 let CARDS = DECK.children;
 let arr = Array.prototype.slice.call(CARDS, 0 );
@@ -77,17 +79,21 @@ const faceCardDown = (el) => {
 }
 
 const timer = () => {
-    let minutes = document.getElementById('minutes');
-    let seconds = document.getElementById('seconds');
-    intervalTrigger = setInterval(() => setTime(seconds, minutes), 1000);
 
-    
+    intervalTrigger = setInterval(() => setTime(seconds, minutes), 1000);
+ 
 }
 
-const setTime = (seconds, minutes) => {
+const setTime = (sec, min) => {
   ++totalSeconds;
-  seconds.innerHTML = pad(totalSeconds % 60);
-  minutes.innerHTML = pad(parseInt(totalSeconds / 60));
+  sec.innerHTML = pad(totalSeconds % 60);
+  min.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+const modalTime = () => {
+   const modalTime = document.getElementById('time');
+
+   modalTime.textContent = minutes.textContent +":"+ seconds.textContent;
 }
 
 const pad = (val) => {
