@@ -90,10 +90,10 @@ const setTime = (sec, min) => {
   min.innerHTML = pad(parseInt(totalSeconds / 60));
 }
 
-const modalTime = () => {
+const modalTime = (sec, min) => {
    const modalTime = document.getElementById('time');
 
-   modalTime.textContent = minutes.textContent +":"+ seconds.textContent;
+   modalTime.textContent = min.textContent +":"+ sec.textContent;
 }
 
 const pad = (val) => {
@@ -169,6 +169,7 @@ const gameComplete = () => {
         document.getElementById('game').style.display = "none";
         document.getElementById('modal').style.display = "block";
         stars2.innerHTML = stars.innerHTML;
+        modalTime(seconds, minutes);
     }
 }
 
