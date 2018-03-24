@@ -129,14 +129,16 @@ h1 {
     margin-bottom: 10px;
 }
 
-.score-panel .stars {
+.score-panel .stars,
+#modal .stars  {
     margin: 0;
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;
 }
 
-.score-panel .stars li {
+.score-panel .stars li,
+#modal .stars li {
     list-style: none;
     display: inline-block;
 }
@@ -156,7 +158,8 @@ h1 {
 
 #modal {
     text-align: center;
-    margin-top: 35%;
+    height: 100vh;
+    padding-top: 30vh;
     display: none;
 }
 #modal > button {
