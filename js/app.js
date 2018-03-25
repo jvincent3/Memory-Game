@@ -152,13 +152,15 @@ const restart = (arr) => {
     moves.textContent = 0;
     faceAllCardsDown();
     shuffle(arr);
-    timer();
     starReset();
+    seconds.innerHTML = "00";
+    minutes.innerHTML = "00";
     document.getElementById('game').style.display = "flex";
     document.getElementById('modal').style.display = "none";
     totalSeconds = -1;
     if (intervalTrigger) {
         clearInterval(intervalTrigger);
+        intervalTrigger = null;
     }
 }
 
@@ -203,21 +205,26 @@ const verifyCard = () => {
 /*
 *ADDS Evenet Listener on CARD element to detect which cards are being pressed
 */
-timer();
+shuffle(arr);
 //THIS ADDEVENTLISTENER LISTENS TO CLICKS MADE IN THE BODY
 document.body.addEventListener('click', function(e) { // Should change transform this into function
     //CHECKS IF THE TARGET CLICKED HAS A PARENT WITH A CLASS RESTART
     if (e.target.parentElement.className === 'restart' || e.target.className === 'restart') {
         restart(arr);
     }
+    if (!intervalTrigger) {
+        timer();
+
+    }
+
     //Checks facing up cards, if greater than 2 and not matched, facedown
     if (OPENEL.length === 0 && SHAKEL.length === 0) {
         DECK.addEventListener('click', click);
 
 
-    if(e.target.tagName ==='LI' && !e.target.classList.contains('match')) {
-        flipCard(e);
-    }
+        if(e.target.tagName ==='LI' && !e.target.classList.contains('match')) {
+            flipCard(e);
+        }
 
 
     } else if (OPENEL.length === 2 && e.target.classList[1] === 'open') {
@@ -234,7 +241,6 @@ document.body.addEventListener('click', function(e) { // Should change transform
 
 
 })();
-
 
 /*
  * set up the event listener for a card. If a card is clicked:
