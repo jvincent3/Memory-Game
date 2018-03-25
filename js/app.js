@@ -107,14 +107,7 @@ const pad = (val) => {
 
 const starRating = (moves) => {
 
-    if (moves >= 35) {
-        
-            STARS.children[0].children[0].classList.remove('fa-star');
-            STARS.children[0].children[0].classList.add('fa-star-o');
-        
-
-    }
-    else if (moves >= 25) {
+    if (moves >= 25) {
         
             STARS.children[1].children[0].classList.remove('fa-star');
             STARS.children[1].children[0].classList.add('fa-star-o');
